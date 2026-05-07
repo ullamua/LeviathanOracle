@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "outDir": "dist",
+    "rootDir": ".",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "declaration": false,
+    "sourceMap": true,
+    "noUncheckedIndexedAccess": false,
+    "lib": ["ES2022"]
+  },
+  "include": [
+    "index.ts",
+    "bot/**/*.ts",
+    "commands/**/*.ts",
+    "scheduling/**/*.ts",
+    "anime/**/*.ts",
+    "profiles/**/*.ts",
+    "guild/**/*.ts",
+    "data/**/*.ts",
+    "cache/**/*.ts",
+    "converters/**/*.ts",
+    "matching/**/*.ts",
+    "ui/**/*.ts",
+    "config/**/*.ts",
+    "observability/**/*.ts",
+    "tests/**/*.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

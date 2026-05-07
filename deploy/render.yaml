@@ -1,0 +1,16 @@
+services:
+  - type: worker
+    name: leviathan-oracle
+    env: docker
+    dockerfilePath: deploy/Dockerfile
+    plan: starter
+    autoDeploy: true
+    envVars:
+      - key: DISCORD_TOKEN
+        sync: false
+      - key: BOT_ID
+        sync: false
+      - key: ANIMESCHEDULE_TOKEN
+        sync: false
+      - key: OWNER_IDS
+        sync: false

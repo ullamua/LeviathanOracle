@@ -1,0 +1,18 @@
+[Unit]
+Description=LeviathanOracle Discord bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/leviathan-oracle
+EnvironmentFile=/opt/leviathan-oracle/.env
+ExecStart=/usr/bin/node /opt/leviathan-oracle/dist/index.js
+Restart=on-failure
+RestartSec=5
+User=oracle
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
