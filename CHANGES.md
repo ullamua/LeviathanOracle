@@ -154,26 +154,6 @@ This file documents every intentional change, structural divergence, new feature
 
 ---
 
-## Bug Fixes
-
-| # | Bug | Original behaviour | Fix in rewrite |
-|---|---|---|---|
-| 1 | Watchlist add silently failed on duplicate | Threw unhandled unique constraint error | `ON CONFLICT DO NOTHING` / `INSERT OR IGNORE` |
-| 2 | Notification dispatch crashed on deleted channel | Unhandled rejection; process could crash | `.catch(() => null)` + warn in `scheduling/scheduler.ts` |
-| 3 | Postgres path unreachable | Config key was `"postgressql"` (typo) so Postgres was never actually used | Fixed key in `config/load.ts` and `data/database.ts` |
-| 4 | Duplicate notifications after restart | No dedup; every restart re-sent pending episodes | `schedules.sent_at` + dedup `WHERE` clause |
-| 5 | `/upcoming` skipped today's airings | Date comparison used local TZ, off by one in some timezones | `animeschedule.ts` uses `timeZone: 'UTC'` |
-| 6 | `/report` modal had no persistence | Report was posted to channel but never saved to DB | Writes to `reports` table in `commands/community/report.ts` |
-| 7 | Profile re-link clobbered other platform | `UPDATE` set both `mal_username` and `anilist_username` in one statement | `profile-store.ts` updates the specific column only |
-| 8 | `/help` was hardcoded | Command list went stale when commands changed | Reads live from `client.application.commands.fetch()` |
-| 9 | MAL scrape silently returned `''` | Layout change → empty string → no error message to user | Throws `MalScrapeError` with descriptive user-facing message |
-| 10 | `/rolenotification add` ignored channel | `channel` option was accepted but not persisted | Stores `role_notification_channel_id` in the DB row |
-| 11 | Middleware bypassed on autocomplete | `discobase-core` did not run on `AutocompleteInteraction` | Custom router in `bot/interaction-router.ts` handles all interaction types |
-| 12 | Level-role gate bypassed | Commands not explicitly registered with middleware skipped the gate | Router enforces globally; commands opt out via `bypassLevelRole: true` |
-| 13 | SQLite `INSERT … RETURNING` failed | SQLite does not support `RETURNING`; queries failed silently | `data/sqlite.ts` synthesises the returned row from `lastInsertRowid` |
-
----
-
 ## Observability
 
 | Area | Original | Rewrite |
