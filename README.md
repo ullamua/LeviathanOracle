@@ -348,28 +348,6 @@ export default command;
 
 ---
 
-## Bug Fixes (from original JS bot)
-
-All known bugs in the original bot are patched in this rewrite:
-
-| # | Bug | Fix location |
-|---|---|---|
-| 1 | Watchlist add silently failed on duplicate title | `commands/anime/watchlist.ts` — uses `ON CONFLICT DO NOTHING` |
-| 2 | Notification dispatch crashed when channel was deleted | `scheduling/scheduler.ts` — `.catch(() => null)` + warn log |
-| 3 | Postgres path was unreachable (`postgressql` typo in config) | `config/load.ts` + `data/database.ts` |
-| 4 | Duplicate notifications fired after bot restart | `schedules.sent_at` column + `sent_at IS NULL OR sent_at < next_airing_at` dedup query |
-| 5 | `/upcoming` skipped today's airings (timezone off-by-one) | `anime/animeschedule.ts` — uses `timeZone: 'UTC'` consistently |
-| 6 | Modal `/report` had no persistence | `commands/community/report.ts` writes to `reports` table in DB |
-| 7 | Profile re-link clobbered the other platform's data | `profiles/profile-store.ts` — updates one column at a time |
-| 8 | `/help` was hardcoded and went stale after command changes | `commands/community/help.ts` — reads live from `client.application.commands` |
-| 9 | MAL profile scrape silently returned `''` on site layout change | `anime/jikan.ts` — throws `MalScrapeError` with user-facing message |
-| 10 | `/rolenotification add` ignored the optional channel override | `commands/anime/rolenotification.ts` — persists `role_notification_channel_id` |
-| 11 | `discobase-core` middleware was bypassed on autocomplete interactions | Replaced with a custom interaction router in `bot/interaction-router.ts` |
-| 12 | Level-role gate bypassed for commands not registered with middleware | Router enforces gate globally; opt-out via `bypassLevelRole: true` on the command |
-| 13 | SQLite did not support `RETURNING` in `INSERT` statements | `data/sqlite.ts` — synthesises `RETURNING` result from `lastInsertRowid` |
-
----
-
 ## Deployment Options
 
 ### Docker
