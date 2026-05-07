@@ -45,8 +45,12 @@ const command: SlashCommand = {
       }));
     }
 
-    const { rows: userCount } = await db.query<{ n: number }>('SELECT COUNT(*)::int AS n FROM watchlists WHERE anime_id = $1', [id]);
-    const { rows: roleCount } = await db.query<{ n: number }>('SELECT COUNT(*)::int AS n FROM role_notifications WHERE anime_id = $1', [id]);
+const { rows: userCount } = await db.query<{ n: number }>(
+  'SELECT COUNT(*) AS n FROM watchlists WHERE anime_id = $1', [id],
+);
+const { rows: roleCount } = await db.query<{ n: number }>(
+  'SELECT COUNT(*) AS n FROM role_notifications WHERE anime_id = $1', [id],
+);
 
     const summary =
       `**${sched.anime_title}** (id \`${id}\`)\n` +
